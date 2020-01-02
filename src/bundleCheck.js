@@ -52,26 +52,29 @@ const STANDARD_RULES = {
   sum: ([min = 0, max = min], sizes) => {
     const sum = sumUp(sizes);
     const result = min <= sum && sum <= max;
+    const names = sizes.map(([name]) => name);
     return {
       result,
-      message: result ? null : `${NOT_MATCHING} (sum): ${min} <= ${sum} <= ${max}`,
+      message: result ? null : `${NOT_MATCHING} (sum): ${min} <= ${sum} <= ${max} (${names})`,
     };
   },
   mean: ([min = 0, max = min], sizes) => {
     const mean = sizes.length && sumUp(sizes) / sizes.length;
     const result = min <= mean && mean <= max;
+    const names = sizes.map(([name]) => name);
     return {
       result,
-      message: result ? null : `${NOT_MATCHING} (mean): ${min} <= ${mean} <= ${max}`,
+      message: result ? null : `${NOT_MATCHING} (mean): ${min} <= ${mean} <= ${max} (${names})`,
     };
   },
   deviation: ([min = 0, max = min], sizes) => {
     const mean = sizes.length && sumUp(sizes) / sizes.length;
     const std = calcMean(sizes.map(([, n]) => (n - mean) ** 2)) ** 0.5;
     const result = min <= std && std <= max;
+    const names = sizes.map(([name]) => name);
     return {
       result,
-      message: result ? null : `${NOT_MATCHING} (deviation): ${min} <= ${std} <= ${max}`,
+      message: result ? null : `${NOT_MATCHING} (deviation): ${min} <= ${std} <= ${max} (${names})`,
     };
   },
 };
