@@ -8,6 +8,7 @@ const constant = require('lodash/constant');
 const zip = require('lodash/zip');
 const flatten = require('lodash/flatten');
 const filter = require('lodash/filter');
+const gzipSize = require('gzip-size');
 
 const NON_EXISTING_RULE = constant(false);
 const BYTE_TO_KILOBYTE = 1000;
@@ -44,7 +45,7 @@ const STANDARD_RULES = {
     const message = sizes.map(([name, size]) => {
       const check = min <= size && size <= max;
       result = result && check;
-      return check ? null : `${NOT_MATCHING}: ${min} <= ${size} <= ${max} (${name})`;
+      return check ? null : `${NOT_MATCHING} (every): ${min} <= ${size} <= ${max} (${name})`;
     });
     return { result, message: filter(message, Boolean) };
   },
@@ -53,7 +54,7 @@ const STANDARD_RULES = {
     const result = min <= sum && sum <= max;
     return {
       result,
-      message: result ? null : `${NOT_MATCHING}: ${min} <= ${sum} <= ${max}`,
+      message: result ? null : `${NOT_MATCHING} (sum): ${min} <= ${sum} <= ${max}`,
     };
   },
   mean: ([min = 0, max = min], sizes) => {
@@ -61,7 +62,7 @@ const STANDARD_RULES = {
     const result = min <= mean && mean <= max;
     return {
       result,
-      message: result ? null : `${NOT_MATCHING}: ${min} <= ${mean} <= ${max}`,
+      message: result ? null : `${NOT_MATCHING} (mean): ${min} <= ${mean} <= ${max}`,
     };
   },
   deviation: ([min = 0, max = min], sizes) => {
@@ -70,7 +71,7 @@ const STANDARD_RULES = {
     const result = min <= std && std <= max;
     return {
       result,
-      message: result ? null : `${NOT_MATCHING}: ${min} <= ${std} <= ${max}`,
+      message: result ? null : `${NOT_MATCHING} (deviation): ${min} <= ${std} <= ${max}`,
     };
   },
 };
@@ -118,7 +119,7 @@ class Bundlecheck {
       const rules = this.rules[id];
       if (!rules || !rules.length) return false;
 
-      const sizes = files.map(file => get(fs.statSync(path.join(this.options.relativeTo, file)), 'size', Number.MAX_SAFE_INTEGER) / BYTE_TO_KILOBYTE);
+      const sizes = files.map(file => gzipSize.fileSync(path.join(this.options.relativeTo, file)) / BYTE_TO_KILOBYTE);
       const sizeMap = zip(files, sizes);
       const appliedRules = rules.map(rule => rule(sizeMap));
 

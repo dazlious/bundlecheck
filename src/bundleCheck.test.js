@@ -160,7 +160,7 @@ describe('Bundlecheck', () => {
 
     describe('> Every', () => {
       it('should pass check on every file size when min size is not set', () => {
-        const expected = [undefined, 0.023];
+        const expected = [undefined, 0.074];
         const config = {
           ...defaultConfig,
           observe: [{
@@ -176,7 +176,7 @@ describe('Bundlecheck', () => {
       });
 
       it('should pass check on every file size when max size is not set', () => {
-        const expected = [0.023];
+        const expected = [0.074];
         const config = {
           ...defaultConfig,
           observe: [{
@@ -192,7 +192,7 @@ describe('Bundlecheck', () => {
       });
 
       it('should pass check on every file size rule if is greater than minSize and smaller than maxSize', () => {
-        const expected = [0.023, 0.036];
+        const expected = [0.074, 0.083];
         const config = {
           ...defaultConfig,
           observe: [{
@@ -207,7 +207,7 @@ describe('Bundlecheck', () => {
       });
 
       it('should fail check on every file size rule if is smaller than minSize and smaller than maxSize', () => {
-        const expected = [0.03, 0.036];
+        const expected = [0.08, 0.083];
         const config = {
           ...defaultConfig,
           observe: [{
@@ -225,7 +225,7 @@ describe('Bundlecheck', () => {
       });
 
       it('should fail check on every file size rule if is greater than minSize and greater than maxSize', () => {
-        const expected = [0.023, 0.023];
+        const expected = [0.074, 0.074];
         const config = {
           ...defaultConfig,
           observe: [{
@@ -245,7 +245,7 @@ describe('Bundlecheck', () => {
 
     describe('> Sum', () => {
       it('should pass check on summing file size when min size is not set', () => {
-        const expected = [undefined, 0.046];
+        const expected = [undefined, 0.148];
         const config = {
           ...defaultConfig,
           observe: [{
@@ -261,7 +261,7 @@ describe('Bundlecheck', () => {
       });
 
       it('should pass check on summing file size when max size is not set', () => {
-        const expected = [0.046];
+        const expected = [0.148];
         const config = {
           ...defaultConfig,
           observe: [{
@@ -277,7 +277,7 @@ describe('Bundlecheck', () => {
       });
 
       it('should pass check on summing up file size rules when between min and max', () => {
-        const expected = [0.116, 0.118];
+        const expected = [0.313, 0.315];
         const config = {
           ...defaultConfig,
           observe: [{
@@ -311,7 +311,7 @@ describe('Bundlecheck', () => {
 
     describe('> Mean', () => {
       it('should pass check on mean file size when min size is not set', () => {
-        const expected = [undefined, 0.023];
+        const expected = [undefined, 0.074];
         const config = {
           ...defaultConfig,
           observe: [{
@@ -327,7 +327,7 @@ describe('Bundlecheck', () => {
       });
 
       it('should pass check on mean file size when max size is not set', () => {
-        const expected = [0.023];
+        const expected = [0.074];
         const config = {
           ...defaultConfig,
           observe: [{
@@ -343,7 +343,7 @@ describe('Bundlecheck', () => {
       });
 
       it('should pass check when the mean size is between min and max', () => {
-        const expected = [0.01, 0.03];
+        const expected = [0.07, 0.08];
         const config = {
           ...defaultConfig,
           observe: [{
@@ -426,7 +426,7 @@ describe('Bundlecheck', () => {
       });
 
       it('should pass check when the standard deviation is between min and max', () => {
-        const expected = [0.006, 0.007];
+        const expected = [0.004, 0.005];
         const config = {
           ...defaultConfig,
           observe: [{
