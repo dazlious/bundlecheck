@@ -6,10 +6,6 @@
   "repository": "git@github.com:dazlious/bundlecheck.git",
   "author": "Michael Duve <mduve@designmail.net>",
   "license": "MIT",
-  "engines": {
-    "node": ">=12.13.1",
-    "npm": ">=6.12.1"
-  },
   "bin": {
     "bundlecheck": "bin/bundlecheck"
   },
