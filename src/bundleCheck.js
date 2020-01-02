@@ -89,9 +89,9 @@ class Bundlecheck {
     this.options = { ...DEFAULT_OPTIONS, ...options };
 
     const observers = get(this.options, 'observe', []).filter(({ paths }) => paths instanceof Array && !!paths.length);
-    const defaultRelativeTo = get(this.options, 'relativeTo', DEFAULT_OPTIONS.relativeTo);
-    const defaultIgnore = get(this.options, 'ignore', DEFAULT_OPTIONS.ignore);
     const defaultCwd = get(this.options, 'cwd', DEFAULT_OPTIONS.cwd);
+    const defaultRelativeTo = get(this.options, 'relativeTo', defaultCwd);
+    const defaultIgnore = get(this.options, 'ignore', DEFAULT_OPTIONS.ignore);
     const defaultRules = get(this.options, 'rules', DEFAULT_OPTIONS.rules);
     this.rules = {};
     this.toObserve = observers.reduce((carr, {
@@ -118,7 +118,7 @@ class Bundlecheck {
       const rules = this.rules[id];
       if (!rules || !rules.length) return false;
 
-      const sizes = files.map(file => get(fs.statSync(file), 'size', Number.MAX_SAFE_INTEGER) / BYTE_TO_KILOBYTE);
+      const sizes = files.map(file => get(fs.statSync(path.join(this.options.relativeTo, file)), 'size', Number.MAX_SAFE_INTEGER) / BYTE_TO_KILOBYTE);
       const sizeMap = zip(files, sizes);
       const appliedRules = rules.map(rule => rule(sizeMap));
 
