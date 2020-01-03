@@ -2,7 +2,7 @@
 const arg = require('arg');
 const chalk = require('chalk');
 const path = require('path');
-const { Bundlecheck } = require('./bundlecheck');
+const { Bundlecheck } = require('bundlecheck/src/bundlecheck');
 
 function parseArgs([,, ...argv]) {
   const args = arg(
