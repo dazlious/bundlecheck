@@ -1,14 +1,12 @@
 const path = require('path');
-const fs = require('fs');
 const uuid = require('uuid/v4');
 const fg = require('fast-glob');
-const get = require('lodash/get');
-const calcMean = require('lodash/mean');
-const constant = require('lodash/constant');
-const zip = require('lodash/zip');
-const flatten = require('lodash/flatten');
-const filter = require('lodash/filter');
 const gzipSize = require('gzip-size');
+const {
+  constant, filter, flatten, get, zip,
+} = require('lodash');
+
+const basicRules = require('./basic-rules');
 
 const NON_EXISTING_RULE = constant(false);
 const BYTE_TO_KILOBYTE = 1000;
@@ -30,61 +28,18 @@ const GLOB_OPTIONS = {
   unique: true,
 };
 
-const NOT_MATCHING = 'Oops, not what you expected';
-
 const buildResult = data => data.reduce((carr, curr) => ({
   result: carr.result && curr.result,
   message: flatten([...carr.message, ...filter([curr.message], Boolean)]),
 }), { result: true, message: [] });
 
-const sumUp = array => array.reduce((res, [, n]) => res + n, 0);
-
-const STANDARD_RULES = {
-  every: ([min = 0, max = min], sizes) => {
-    let result = true;
-    const message = sizes.map(([name, size]) => {
-      const check = min <= size && size <= max;
-      result = result && check;
-      return check ? null : `${NOT_MATCHING} (every): ${min} <= ${size} <= ${max} (${name})`;
-    });
-    return { result, message: filter(message, Boolean) };
-  },
-  sum: ([min = 0, max = min], sizes) => {
-    const sum = sumUp(sizes);
-    const result = min <= sum && sum <= max;
-    const names = sizes.map(([name]) => name);
-    return {
-      result,
-      message: result ? null : `${NOT_MATCHING} (sum): ${min} <= ${sum} <= ${max} (${names})`,
-    };
-  },
-  mean: ([min = 0, max = min], sizes) => {
-    const mean = sizes.length && sumUp(sizes) / sizes.length;
-    const result = min <= mean && mean <= max;
-    const names = sizes.map(([name]) => name);
-    return {
-      result,
-      message: result ? null : `${NOT_MATCHING} (mean): ${min} <= ${mean} <= ${max} (${names})`,
-    };
-  },
-  deviation: ([min = 0, max = min], sizes) => {
-    const mean = sizes.length && sumUp(sizes) / sizes.length;
-    const std = calcMean(sizes.map(([, n]) => (n - mean) ** 2)) ** 0.5;
-    const result = min <= std && std <= max;
-    const names = sizes.map(([name]) => name);
-    return {
-      result,
-      message: result ? null : `${NOT_MATCHING} (deviation): ${min} <= ${std} <= ${max} (${names})`,
-    };
-  },
-};
 
 const mapToStandardRules = rules => rules.reduce((carr, rule) => {
   // TODO: Make sure only functions are valid that have correct signature
   if (rule instanceof Function) return [...carr, rule];
   const ruleOptions = Object.entries(rule);
   const stdRules = ruleOptions.map(([name, params]) => (
-    get(STANDARD_RULES, name, NON_EXISTING_RULE).bind(null, params)));
+    get(basicRules, name, NON_EXISTING_RULE).bind(null, params)));
   return [...carr, ...stdRules];
 }, []);
 
@@ -115,6 +70,10 @@ class Bundlecheck {
     }, {});
   }
 
+  gzip(file) {
+    return gzipSize.fileSync(path.join(this.options.relativeTo, file)) / BYTE_TO_KILOBYTE;
+  }
+
   check() {
     const observableEntries = Object.entries(this.toObserve);
 
@@ -122,8 +81,7 @@ class Bundlecheck {
       const rules = this.rules[id];
       if (!rules || !rules.length) return false;
 
-      const sizes = files.map(file => gzipSize.fileSync(path.join(this.options.relativeTo, file)) / BYTE_TO_KILOBYTE);
-      const sizeMap = zip(files, sizes);
+      const sizeMap = zip(files, files.map(file => this.gzip(file)));
       const appliedRules = rules.map(rule => rule(sizeMap));
 
       return buildResult(appliedRules);
