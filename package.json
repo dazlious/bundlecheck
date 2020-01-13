@@ -1,6 +1,6 @@
 {
   "name": "bundlecheck",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Check your application's build size and take code-splitting into account",
   "main": "index.js",
   "homepage": "https://github.com/dazlious/bundlecheck",
@@ -33,17 +33,21 @@
   "scripts": {
     "start": "nodemon index.js",
     "test": "jest",
-    "lint": "eslint -c .eslintrc.js --ext .js ."
+    "lint": "eslint -c .eslintrc.js --ext .js .",
+    "semantic-release": "semantic-release"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.3.4",
     "@commitlint/config-conventional": "^8.3.4",
+    "@semantic-release/changelog": "^3.0.6",
+    "@semantic-release/git": "^8.0.0",
     "eslint": "^6.7.2",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.19.1",
     "eslint-plugin-node": "^10.0.0",
     "jest": "^24.9.0",
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.2",
+    "semantic-release": "^16.0.1"
   },
   "dependencies": {
     "arg": "^4.1.2",
@@ -57,6 +61,6 @@
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }  
+    }
   }
 }
