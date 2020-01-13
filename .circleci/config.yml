@@ -35,6 +35,7 @@ jobs:
       - attach_workspace:
           at: ./
       - run: yarn test
+      - run: curl -s https://codecov.io/bash | bash
   deploy-gh-pages:
     executor: default
     steps:
