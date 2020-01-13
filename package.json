@@ -3,9 +3,22 @@
   "version": "0.2.1",
   "description": "Check your application's build size and take code-splitting into account",
   "main": "index.js",
-  "repository": "git@github.com:dazlious/bundlecheck.git",
+  "homepage": "https://github.com/dazlious/bundlecheck",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:dazlious/bundlecheck.git"
+  },
   "author": "Michael Duve <mduve@designmail.net>",
   "license": "MIT",
+  "keywords": [
+    "bundlesize",
+    "performance",
+    "measure",
+    "check",
+    "build",
+    "artifact",
+    "optimization"
+  ],
   "bin": {
     "bundlecheck": "bin/bundlecheck"
   },
@@ -38,5 +51,10 @@
     "gzip-size": "^5.1.1",
     "lodash": "^4.17.15",
     "uuid": "^3.3.3"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }  
   }
 }
