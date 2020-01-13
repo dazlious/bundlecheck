@@ -1,4 +1,4 @@
-# Bundlecheck
+## Description
 
 Check the sizes of your code-splitted bundles. Any file, a lot of predefined rules and fully customized rules can be added.
 
