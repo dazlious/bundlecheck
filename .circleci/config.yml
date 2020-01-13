@@ -35,6 +35,27 @@ jobs:
       - attach_workspace:
           at: ./
       - run: yarn test
+  deploy-gh-pages:
+    executor: default
+    steps:
+      - checkout
+      - run: |
+          mkdir -p .out
+          cp ./README.md .out/README.md
+          cp ./_config.yml .out/_config.yml
+      - run:
+          name: Install and configure dependencies
+          command: |
+            sudo npm install -g gh-pages@2.0.1
+            git config user.email "${CIRCLE_USERNAME}@users.noreply.github.com"
+            git config user.name "${CIRCLE_USERNAME}"
+      - add_ssh_keys:
+          fingerprints:
+            - "47:e6:c8:c5:9a:ce:80:14:c2:d8:80:3e:3d:2b:ad:96"
+      - run:
+          name: Deploy docs to gh-pages branch
+          command: |
+            gh-pages --message "chore(ci): update cocumentation [skip ci]" --dist .out
 workflows:
   deploy:
     jobs:
@@ -45,3 +66,10 @@ workflows:
       - test:
           requires:
             - install-deps
+      - deploy-gh-pages:
+          requires:
+            - test
+            - lint
+          filters:
+            branches:
+              only: master
