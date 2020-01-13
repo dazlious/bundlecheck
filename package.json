@@ -6,7 +6,7 @@
   "homepage": "https://github.com/dazlious/bundlecheck",
   "repository": {
     "type": "git",
-    "url": "git@github.com:dazlious/bundlecheck.git"
+    "url": "https://github.com/dazlious/bundlecheck.git"
   },
   "author": "Michael Duve <mduve@designmail.net>",
   "license": "MIT",

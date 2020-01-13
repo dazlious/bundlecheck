@@ -55,7 +55,7 @@ jobs:
       - run:
           name: Deploy docs to gh-pages branch
           command: |
-            gh-pages --message "chore(ci): update cocumentation [skip ci]" --dist .out
+            gh-pages --message "chore(ci): update documentation [skip ci]" --dist .out
 workflows:
   deploy:
     jobs:
