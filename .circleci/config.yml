@@ -1,0 +1,47 @@
+version: 2.1
+executors:
+  default:
+    docker:
+      - image: circleci/node:12.3.1
+jobs:
+  install-deps:
+    executor: default
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "yarn.lock" }}
+            - v1-dependencies-
+      - run: yarn install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "yarn.lock" }}
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - node_modules
+  lint:
+    executor: default
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ./
+      - run: yarn lint
+  test:
+    executor: default
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ./
+      - run: yarn test
+workflows:
+  deploy:
+    jobs:
+      - install-deps
+      - lint:
+          requires:
+            - install-deps
+      - test:
+          requires:
+            - install-deps
