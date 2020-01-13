@@ -2,7 +2,9 @@
 const arg = require('arg');
 const chalk = require('chalk');
 const path = require('path');
-const { Bundlecheck } = require('bundlecheck/src/bundlecheck');
+
+// eslint-disable-next-line node/no-missing-require, import/no-unresolved
+const { Bundlecheck } = require('bundlecheck/src/bundlecheck'); // needed for hoisting
 
 function parseArgs([,, ...argv]) {
   const args = arg(

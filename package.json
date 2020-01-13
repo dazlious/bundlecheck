@@ -20,7 +20,7 @@
   "scripts": {
     "start": "nodemon index.js",
     "test": "jest",
-    "lint": "eslint -c .eslintrc.js --ignore-path .gitignore --ext .js ."
+    "lint": "eslint -c .eslintrc.js --ext .js ."
   },
   "devDependencies": {
     "eslint": "^6.7.2",
