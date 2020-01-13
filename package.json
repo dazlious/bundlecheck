@@ -24,7 +24,7 @@
   },
   "files": [
     "bin/",
-    "src/"
+    "src/!(*.test.js)"
   ],
   "engines": {
     "node": ">=8.3.0",
