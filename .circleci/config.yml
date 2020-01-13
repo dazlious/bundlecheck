@@ -56,6 +56,15 @@ jobs:
           name: Deploy docs to gh-pages branch
           command: |
             gh-pages --message "chore(ci): update documentation [skip ci]" --dist .out
+  release:
+    executor: default
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ./
+      - run:
+          name: release
+          command: npm run semantic-release || true
 workflows:
   deploy:
     jobs:
@@ -70,6 +79,12 @@ workflows:
           requires:
             - test
             - lint
+          filters:
+            branches:
+              only: master
+      - release:
+          requires:
+            - deploy-gh-pages
           filters:
             branches:
               only: master
