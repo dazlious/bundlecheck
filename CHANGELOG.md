@@ -1,3 +1,10 @@
+## [0.3.1](https://github.com/dazlious/bundlecheck/compare/v0.3.0...v0.3.1) (2020-07-08)
+
+
+### Bug Fixes
+
+* **security:** upgraded minimist ([194a30a](https://github.com/dazlious/bundlecheck/commit/194a30add9ac394ffaa71addf00cffe70032cd28))
+
 # [0.3.0](https://github.com/dazlious/bundlecheck/compare/v0.2.1...v0.3.0) (2020-01-13)
 
 

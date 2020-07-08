@@ -1,6 +1,6 @@
 {
   "name": "bundlecheck",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Check your application's build size and take code-splitting into account",
   "main": "index.js",
   "homepage": "https://dazlious.github.io/bundlecheck",
