@@ -33,7 +33,6 @@ const buildResult = data => data.reduce((carr, curr) => ({
   message: flatten([...carr.message, ...filter([curr.message], Boolean)]),
 }), { result: true, message: [] });
 
-
 const mapToStandardRules = rules => rules.reduce((carr, rule) => {
   // TODO: Make sure only functions are valid that have correct signature
   if (rule instanceof Function) return [...carr, rule];
