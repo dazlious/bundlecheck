@@ -1,5 +1,5 @@
 const path = require('path');
-const uuid = require('uuid/v4');
+const { nanoid } = require('nanoid');
 const fg = require('fast-glob');
 const gzipSize = require('gzip-size');
 const {
@@ -59,7 +59,7 @@ class Bundlecheck {
       ignore = defaultIgnore,
       cwd = defaultCwd,
     }) => {
-      const id = uuid();
+      const id = nanoid();
       const entries = fg.sync(paths, { ...GLOB_OPTIONS, cwd, ignore });
       this.rules[id] = mapToStandardRules(rules);
       return {

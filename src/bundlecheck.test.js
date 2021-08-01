@@ -1,12 +1,12 @@
 const path = require('path');
-const uuid = require('uuid/v4');
+const { nanoid } = require('nanoid');
 
 const { Bundlecheck, DEFAULT_OPTIONS } = require('./bundlecheck');
 
-jest.mock('uuid/v4');
+jest.mock('nanoid');
 
 let uuidCounter = 0;
-uuid.mockImplementation(() => uuidCounter++);
+nanoid.mockImplementation(() => uuidCounter++);
 
 describe('Bundlecheck', () => {
   it('should initialize', () => {

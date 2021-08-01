@@ -1,3 +1,62 @@
+# [1.0.0](https://github.com/dazlious/bundlecheck/compare/v0.3.1...v1.0.0) (2021-08-02)
+
+
+### Bug Fixes
+
+* **dependencies:** bumped dependencies ([97c5834](https://github.com/dazlious/bundlecheck/commit/97c583443ad5bcbbd26e6d0e5f578ca539c5b9c3))
+* **dependencies:** bumped dependencies ([babeacd](https://github.com/dazlious/bundlecheck/commit/babeacd0ebbacebcea1947f44ad14c01813f9a04))
+
+
+### BREAKING CHANGES
+
+* **dependencies:** - Node 10 is required
+
+Chore:
+- replace uuid by nanoid
+- upgrade fast-glob, gzip-size, lodash, chalk, and arg to latest versions
+- upgraded dev dependencies to latest versions
+
+Other changes:
+
+- only do a semantic release on branch release
+- deploy gh-pages only on branch release
+- codebase now runs on 12.22.1
+* **dependencies:** - Node 10 is required
+
+Chore:
+- replace uuid by nanoid
+- upgrade fast-glob, gzip-size, lodash, chalk, and arg to latest versions
+- upgraded dev dependencies to latest versions
+
+Other changes:
+
+- only do a semantic release on branch release
+- deploy gh-pages only on branch release
+- codebase now runs on 12.22.1
+
+# [1.0.0](https://github.com/dazlious/bundlecheck/compare/v0.3.1...v1.0.0) (2021-08-02)
+
+
+### Bug Fixes
+
+* **dependencies:** bumped dependencies ([97c5834](https://github.com/dazlious/bundlecheck/commit/97c583443ad5bcbbd26e6d0e5f578ca539c5b9c3))
+
+
+### BREAKING CHANGES
+
+* **dependencies:** - Node 10 is required
+
+Chore:
+- replace uuid by nanoid
+- upgrade fast-glob, gzip-size, lodash, chalk, and arg to latest versions
+- upgraded dev dependencies to latest versions
+
+Other changes:
+
+- only do a semantic release on branch release
+- deploy gh-pages only on branch release
+- codebase now runs on 12.22.1
+
 ## [0.3.1](https://github.com/dazlious/bundlecheck/compare/v0.3.0...v0.3.1) (2020-07-08)
 
 
