@@ -2,7 +2,7 @@ version: 2.1
 executors:
   default:
     docker:
-      - image: circleci/node:12.3.1
+      - image: circleci/node:12.22.1
 jobs:
   install-deps:
     executor: default
@@ -40,14 +40,17 @@ jobs:
     executor: default
     steps:
       - checkout
-      - run: |
-          mkdir -p .out
-          cp ./README.md .out/README.md
-          cp ./_config.yml .out/_config.yml
-      - run:
-          name: Install and configure dependencies
+      - attach_workspace:
+          at: ./
+      - run: 
+          name: Copy files to .out
           command: |
-            sudo npm install -g gh-pages@2.0.1
+            mkdir -p .out
+            cp ./README.md .out/README.md
+            cp ./_config.yml .out/_config.yml
+      - run:
+          name: Setup git user
+          command: |
             git config user.email "${CIRCLE_USERNAME}@users.noreply.github.com"
             git config user.name "${CIRCLE_USERNAME}"
       - add_ssh_keys:
@@ -56,7 +59,7 @@ jobs:
       - run:
           name: Deploy docs to gh-pages branch
           command: |
-            gh-pages --message "chore(ci): update documentation [skip ci]" --dist .out
+            yarn docs
   release:
     executor: default
     steps:
@@ -82,10 +85,12 @@ workflows:
             - lint
           filters:
             branches:
-              only: master
+              only: 
+                - release
       - release:
           requires:
-            - deploy-gh-pages
+            - test
+            - lint
           filters:
             branches:
-              only: master
+              only: release
