@@ -49,7 +49,7 @@
     "gh-pages": "^3.2.3",
     "jest": "^27.0.6",
     "nodemon": "^2.0.12",
-    "semantic-release": "^16.0.1"
+    "semantic-release": "^17.2.3"
   },
   "dependencies": {
     "arg": "^5.0.0",
