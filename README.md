@@ -1,5 +1,5 @@
-[![CircleCI](https://circleci.com/gh/dazlious/bundlecheck/tree/master.svg?style=svg)](https://circleci.com/gh/dazlious/bundlecheck/tree/master)
-[![codecov](https://codecov.io/gh/dazlious/bundlecheck/branch/master/graph/badge.svg)](https://codecov.io/gh/dazlious/bundlecheck)
+[![CircleCI](https://circleci.com/gh/dazlious/bundlecheck/tree/main.svg?style=svg)](https://circleci.com/gh/dazlious/bundlecheck/tree/main)
+[![codecov](https://codecov.io/gh/dazlious/bundlecheck/branch/main/graph/badge.svg)](https://codecov.io/gh/dazlious/bundlecheck)
 
 Check the sizes of your code-splitted bundles. Any file, a lot of predefined rules and fully customized rules can be added.
 
