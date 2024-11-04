@@ -1,3 +1,16 @@
+# [2.0.0](https://github.com/dazlious/bundlecheck/compare/v1.0.1...v2.0.0) (2024-11-04)
+
+
+### Features
+
+* **deps:** upgrade to latest versions ([60dd0e2](https://github.com/dazlious/bundlecheck/commit/60dd0e2ad190a51b0dbc5da7cb3a11109f4e5212))
+
+
+### BREAKING CHANGES
+
+* **deps:** - updgrade to esm
+- using node version 22.11.0
+
 ## [1.0.1](https://github.com/dazlious/bundlecheck/compare/v1.0.0...v1.0.1) (2021-08-04)
 
 
