@@ -1,4 +1,4 @@
-const { Bundlecheck } = require('../src/bundlecheck');
+import { Bundlecheck } from '../src/bundlecheck';
 
 const bc = new Bundlecheck({
   relativeTo: '.',

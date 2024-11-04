@@ -1,3 +1,3 @@
-const bundlecheck = require('./src/index');
+import bundlecheck from './src/index.js';
 
-module.exports = bundlecheck;
+export default bundlecheck;

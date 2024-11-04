@@ -1,9 +1,13 @@
 module.exports = {
   root: true,
   plugins: ['node'],
-  extends: ['eslint:recommended', 'plugin:node/recommended', 'eslint-config-airbnb-base'],
+  extends: ['plugin:node/recommended', 'eslint-config-airbnb-base'],
   parserOptions: {
     ecmaVersion: 2020,
+    sourceType: 'module',
+  },
+  globals: {
+    __dirname: 'readonly',
   },
   env: {
     es6: true,
@@ -17,5 +21,7 @@ module.exports = {
     ],
     'arrow-parens': ['error', 'as-needed'],
     'no-plusplus': 'off',
+    'import/extensions': 'off',
+    'node/no-unsupported-features/es-syntax': 'off',
   },
 };

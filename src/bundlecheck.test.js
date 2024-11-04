@@ -1,14 +1,25 @@
-const path = require('path');
-const { nanoid } = require('nanoid');
+import path from 'path';
 
-const { Bundlecheck, DEFAULT_OPTIONS } = require('./bundlecheck');
+import { Bundlecheck, DEFAULT_OPTIONS } from './bundlecheck.js';
 
-jest.mock('nanoid');
-
-let uuidCounter = 0;
-nanoid.mockImplementation(() => uuidCounter++);
+jest.mock('./esm.js', () => ({
+  __dirname: './',
+}));
 
 describe('Bundlecheck', () => {
+  jest.useFakeTimers();
+  jest.setSystemTime(new Date('2024-01-01'));
+
+  let counter = 0;
+  jest.spyOn(global.Math, 'random').mockImplementation(() => {
+    counter += 1;
+    return (counter / 1000);
+  });
+
+  beforeEach(() => {
+    counter = 0;
+  });
+
   it('should initialize', () => {
     expect(Bundlecheck).toBeInstanceOf(Function);
     expect(new Bundlecheck()).toBeInstanceOf(Bundlecheck);
@@ -39,22 +50,21 @@ describe('Bundlecheck', () => {
       expect(bundlecheck.options.cwd).toEqual(config.cwd);
       expect(bundlecheck.options.observe).toEqual(config.observe);
       expect(bundlecheck.options).not.toEqual(DEFAULT_OPTIONS);
-      expect(bundlecheck.toObserve).toEqual(
-        {
-          [uuidCounter - 2]: [
-            '../test/bar.json',
-            '../test/foo.js',
-            '../test/__dist/bar.json',
-            '../test/__dist/foo.js',
-          ],
-          [uuidCounter - 1]: [
-            'test/bar.json',
-            'test/foo.js',
-            'test/__dist/bar.json',
-            'test/__dist/foo.js',
-          ],
-        },
-      );
+
+      expect(bundlecheck.toObserve).toEqual(expect.objectContaining({
+        [`${Date.now()}-1`]: [
+          '../test/bar.json',
+          '../test/foo.js',
+          '../test/__dist/bar.json',
+          '../test/__dist/foo.js',
+        ],
+        [`${Date.now()}-2`]: [
+          'test/bar.json',
+          'test/foo.js',
+          'test/__dist/bar.json',
+          'test/__dist/foo.js',
+        ],
+      }));
     });
 
     it('should use correct current working directory', () => {
@@ -78,11 +88,11 @@ describe('Bundlecheck', () => {
       expect(bundlecheck.options).not.toEqual(DEFAULT_OPTIONS);
       expect(bundlecheck.toObserve).toEqual(
         {
-          [uuidCounter - 2]: [
+          [`${Date.now()}-1`]: [
             'test/__dist/bar.json',
             'test/__dist/foo.js',
           ],
-          [uuidCounter - 1]: [
+          [`${Date.now()}-2`]: [
             'test/bar.json',
             'test/foo.js',
             'test/__dist/bar.json',
@@ -118,16 +128,16 @@ describe('Bundlecheck', () => {
       expect(bundlecheck.options).not.toEqual(DEFAULT_OPTIONS);
       expect(bundlecheck.toObserve).toEqual(
         {
-          [uuidCounter - 3]: [
+          [`${Date.now()}-1`]: [
             'test/bar.json',
           ],
-          [uuidCounter - 2]: [
+          [`${Date.now()}-2`]: [
             'test/bar.json',
             'test/foo.js',
             'test/__dist/bar.json',
             'test/__dist/foo.js',
           ],
-          [uuidCounter - 1]: [
+          [`${Date.now()}-3`]: [
             'test/__dist/bar.json',
             'test/__dist/foo.js',
           ],

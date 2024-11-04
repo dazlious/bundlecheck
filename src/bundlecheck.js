@@ -1,12 +1,12 @@
-const path = require('path');
-const { nanoid } = require('nanoid');
-const fg = require('fast-glob');
-const gzipSize = require('gzip-size');
-const {
+import {
   constant, filter, flatten, get, zip,
-} = require('lodash');
+} from 'lodash-es';
+import fg from 'fast-glob';
+import { gzipSizeFromFileSync } from 'gzip-size';
+import path from 'path';
+import { __dirname } from './esm.js';
 
-const basicRules = require('./basic-rules');
+import * as basicRules from './basic-rules.js';
 
 const NON_EXISTING_RULE = constant(false);
 const BYTE_TO_KILOBYTE = 1000;
@@ -59,7 +59,7 @@ class Bundlecheck {
       ignore = defaultIgnore,
       cwd = defaultCwd,
     }) => {
-      const id = nanoid();
+      const id = `${Date.now()}-${parseInt(Math.random() * 1000, 10)}`;
       const entries = fg.sync(paths, { ...GLOB_OPTIONS, cwd, ignore });
       this.rules[id] = mapToStandardRules(rules);
       return {
@@ -70,7 +70,7 @@ class Bundlecheck {
   }
 
   gzip(file) {
-    return gzipSize.fileSync(path.join(this.options.relativeTo, file)) / BYTE_TO_KILOBYTE;
+    return gzipSizeFromFileSync(path.join(this.options.relativeTo, file)) / BYTE_TO_KILOBYTE;
   }
 
   check() {
@@ -90,7 +90,7 @@ class Bundlecheck {
   }
 }
 
-module.exports = {
+export {
   DEFAULT_OPTIONS,
   Bundlecheck,
 };

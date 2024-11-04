@@ -1,3 +1,3 @@
-const CLI = require('./cli');
+import CLI from './cli.js';
 
-module.exports = CLI;
+export default CLI;

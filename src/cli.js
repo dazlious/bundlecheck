@@ -1,10 +1,9 @@
 /* eslint-disable no-console */
-const arg = require('arg');
-const chalk = require('chalk');
-const path = require('path');
+import arg from 'arg';
+import chalk from 'chalk';
+import path from 'path';
 
-// eslint-disable-next-line node/no-missing-require, import/no-unresolved
-const { Bundlecheck } = require('bundlecheck/src/bundlecheck'); // needed for hoisting
+import { Bundlecheck } from './bundlecheck.js';
 
 function parseArgs([,, ...argv]) {
   const args = arg(
@@ -21,18 +20,17 @@ function parseArgs([,, ...argv]) {
   };
 }
 
-module.exports = {
-  cli: args => {
+export default {
+  cli: async args => {
     const { configfile } = parseArgs(args);
     let config = {};
     try {
-      // eslint-disable-next-line global-require,import/no-dynamic-require
-      config = require(path.resolve(configfile));
+      config = await import(path.resolve(configfile));
     } catch (_err) {
       console.warn(`Failed reading config file ${configfile}. Using default config.`);
     }
 
-    const bc = new Bundlecheck(config);
+    const bc = new Bundlecheck(config?.default);
     const { result, message } = bc.check();
 
     if (result) {

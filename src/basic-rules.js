@@ -1,5 +1,4 @@
-const filter = require('lodash/filter');
-const calcMean = require('lodash/mean');
+import { filter, mean as calcMean } from 'lodash-es';
 
 const NOT_MATCHING = 'Oops, not what you expected';
 
@@ -46,7 +45,7 @@ const deviation = ([min = 0, max = min], sizes) => {
   };
 };
 
-module.exports = {
+export {
   every,
   sum,
   mean,
